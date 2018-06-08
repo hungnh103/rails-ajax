@@ -40,4 +40,11 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit :name, :price
   end
+
+  def load_product
+    @product = Product.find_by id: params[:id]
+    return if @product
+    flash[:danger] = "Record not found"
+    redirect_to products_url
+  end
 end
